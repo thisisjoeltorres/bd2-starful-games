@@ -1,4 +1,4 @@
-# 📦 Nexus Games: Sistema Web de Inventario y Ventas
+# 📦 Starful Games: Sistema Web de Inventario y Ventas
 
 Aplicación web desarrollada con **Flask + PostgreSQL** para administrar el inventario físico de videojuegos por plataforma, registrar ventas en tiempo real y generar reportes financieros. Proyecto académico adaptado para la asignatura de Bases de Datos.
 
@@ -28,7 +28,7 @@ Construir un sistema CRUD completo que integre un backend en Python con una base
 ## 📁 Estructura del Proyecto
 
 ```text
-nexus_games/
+starful_games/
 │
 ├── app.py                  # Punto de entrada y enrutamiento Flask[cite: 1]
 ├── config.py               # Parámetros de conexión y variables de entorno[cite: 1]
@@ -36,7 +36,7 @@ nexus_games/
 │
 ├── database/
 │   ├── conexion.py         # Módulo de conexión a la base de datos[cite: 1]
-│   └── nexus_games.sql     # Script DDL (Tablas, Triggers, Vistas y Datos iniciales)[cite: 1]
+│   └── starful_games.sql     # Script DDL (Tablas, Triggers, Vistas y Datos iniciales)[cite: 1]
 │
 ├── controllers/
 │   ├── usuario_controller.py   # Lógica de autenticación del personal[cite: 1]
@@ -69,7 +69,7 @@ nexus_games/
 
 ```bash
 git clone <url-del-repositorio>
-cd nexus_games
+cd starful_games
 
 ```
 
@@ -97,7 +97,7 @@ Edita el archivo `config.py` e introduce las credenciales correspondientes a tu 
 ```python
 DB_HOST     = "localhost"
 DB_PORT     = 5432          
-DB_NAME     = "nexus_games_db"
+DB_NAME     = "starful_games_db"
 DB_USER     = "tu_usuario"
 DB_PASSWORD = "tu_contraseña"
 
@@ -106,7 +106,7 @@ DB_PASSWORD = "tu_contraseña"
 Ejecuta el script SQL en tu gestor o terminal para estructurar la base de datos:
 
 ```bash
-psql -U tu_usuario -d nexus_games_db -f database/nexus_games.sql
+psql -U tu_usuario -d starful_games_db -f database/starful_games.sql
 
 ```
 
