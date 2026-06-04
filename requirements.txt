@@ -1,0 +1,1 @@
+# El archivo requierement va a guardar la lista de todas las versiones que usamos.

@@ -1,0 +1,30 @@
+starful_games/
+│
+├── app.py                  # Punto de entrada y registro de rutas Flask
+├── config.py               # Credenciales de conexión a la Base de Datos
+├── requirements.txt        # Dependencias del proyecto (Flask, Psycopg2, ReportLab)
+│
+├── database/
+│   ├── conexion.py         # Módulo de conexión (PostgreSQL / MySQL)
+│   └── nexus_games.sql     # Script DDL: Tablas, Triggers, Funciones y Vistas
+│
+├── controllers/
+│   ├── usuario_controller.py   # Autenticación de empleados/administradores
+│   ├── juego_controller.py     # CRUD de videojuegos y stock
+│   └── venta_controller.py     # Lógica de transacciones de juegos físicos
+│
+├── templates/
+│   ├── login.html          # Control de acceso
+│   ├── inicio.html         # Dashboard (Métricas rápidas de videojuegos)
+│   ├── juegos.html         # Gestión del catálogo de juegos y plataformas
+│   ├── ventas.html         # Formulario de salida de inventario físico
+│   └── reportes.html       # Visualización de reportes de ventas
+│
+├── static/
+│   ├── css/
+│   │   └── estilos.css     # Ajustes de diseño de Nexus Games
+│   ├── img/                # Logos y placeholders de carátulas
+│   └── pdf/                # Directorio temporal de facturas generadas
+│
+└── reports/
+    └── generar_pdf.py      # Motor de ReportLab para reportes físicos
