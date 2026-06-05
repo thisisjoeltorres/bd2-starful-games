@@ -6,7 +6,7 @@ starful_games/
 │
 ├── database/
 │   ├── conexion.py         # Módulo de conexión (PostgreSQL / MySQL)
-│   └── nexus_games.sql     # Script DDL: Tablas, Triggers, Funciones y Vistas
+│   └── starful_games.sql     # Script DDL: Tablas, Triggers, Funciones y Vistas
 │
 ├── controllers/
 │   ├── usuario_controller.py   # Autenticación de empleados/administradores
@@ -22,7 +22,7 @@ starful_games/
 │
 ├── static/
 │   ├── css/
-│   │   └── estilos.css     # Ajustes de diseño de Nexus Games
+│   │   └── estilos.css     # Ajustes de diseño de starful_games Games
 │   ├── img/                # Logos y placeholders de carátulas
 │   └── pdf/                # Directorio temporal de facturas generadas
 │
