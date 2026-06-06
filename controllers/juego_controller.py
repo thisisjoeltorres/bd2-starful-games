@@ -78,3 +78,59 @@ def registrar_juego(titulo, genero, id_plataforma, precio, stock):
         finally:
             conexion.close()
     return False
+
+def obtener_juego_por_id(id_inventario):
+    """Busca los datos de un juego específico para llenar el formulario de edición"""
+    conexion = obtener_conexion()
+    juego = None
+    if conexion:
+        try:
+            with conexion.cursor() as cursor:
+                query = """
+                    SELECT i.id_inventario, i.id_juego, j.titulo, j.genero, i.id_plataforma, j.precio, i.stock
+                    FROM inventario i
+                    JOIN juegos j ON i.id_juego = j.id_juego
+                    WHERE i.id_inventario = %s;
+                """
+                cursor.execute(query, (id_inventario,))
+                fila = cursor.fetchone()
+                if fila:
+                    columnas = [desc[0] for desc in cursor.description]
+                    juego = dict(zip(columnas, fila))
+        except Exception as e:
+            print(f"Error al obtener juego por ID: {e}")
+        finally:
+            conexion.close()
+    return juego
+
+def actualizar_juego(id_inventario, id_juego, titulo, genero, id_plataforma, precio, stock):
+    """Ejecuta el UPDATE en las tablas juegos e inventario"""
+    conexion = obtener_conexion()
+    if conexion:
+        try:
+            with conexion.cursor() as cursor:
+                # 1. Actualizar los datos base en la tabla juegos
+                query_juego = """
+                    UPDATE juegos
+                    SET titulo = %s, genero = %s, precio = %s
+                    WHERE id_juego = %s;
+                """
+                cursor.execute(query_juego, (titulo, genero, precio, id_juego))
+
+                # 2. Actualizar plataforma y stock en la tabla inventario
+                query_inventario = """
+                    UPDATE inventario
+                    SET id_plataforma = %s, stock = %s
+                    WHERE id_inventario = %s;
+                """
+                cursor.execute(query_inventario, (id_plataforma, stock, id_inventario))
+
+            conexion.commit()
+            return True
+        except Exception as e:
+            print(f"Error al actualizar videojuego: {e}")
+            conexion.rollback()
+            return False
+        finally:
+            conexion.close()
+    return False

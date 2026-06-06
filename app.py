@@ -68,6 +68,43 @@ def nuevo_juego():
     # Redirigimos de vuelta a la pantalla de inventario
     return redirect(url_for('juegos'))
 
+@app.route('/juegos/editar/<int:id_inventario>')
+def editar_juego(id_inventario):
+    if 'usuario_id' not in session:
+        return redirect(url_for('login'))
+    
+    # Buscamos el juego en la BD
+    juego = juego_controller.obtener_juego_por_id(id_inventario)
+    
+    if not juego:
+        flash('El videojuego solicitado no existe en el inventario.', 'danger')
+        return redirect(url_for('juegos'))
+        
+    return render_template('editar_juego.html', juego=juego)
+
+@app.route('/juegos/actualizar/<int:id_inventario>', methods=['POST'])
+def actualizar_juego(id_inventario):
+    if 'usuario_id' not in session:
+        return redirect(url_for('login'))
+        
+    # Capturamos los datos actualizados del formulario
+    id_juego = request.form['id_juego'] # Campo oculto necesario para el UPDATE
+    titulo = request.form['titulo']
+    genero = request.form['genero']
+    id_plataforma = request.form['id_plataforma']
+    precio = request.form['precio']
+    stock = request.form['stock']
+    
+    # Enviamos a la BD
+    exito = juego_controller.actualizar_juego(id_inventario, id_juego, titulo, genero, id_plataforma, precio, stock)
+    
+    if exito:
+        flash('Videojuego actualizado exitosamente.', 'success')
+    else:
+        flash('Ocurrió un error al actualizar el videojuego.', 'danger')
+        
+    return redirect(url_for('juegos'))
+
 @app.route('/ventas', methods=['GET', 'POST'])
 def ventas():
     if 'usuario_id' not in session:
