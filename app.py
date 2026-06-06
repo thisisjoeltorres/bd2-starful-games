@@ -111,8 +111,21 @@ def ventas():
         return redirect(url_for('login'))
         
     if request.method == 'POST':
-        # Lógica para capturar formulario de ventas enviada al controller
-        pass
+        # Capturamos los datos enviados desde el formulario
+        id_inventario = request.form['id_inventario']
+        cantidad = request.form['cantidad']
+        id_usuario = session['usuario_id'] # El ID del cajero que inició sesión
+        
+        # Procesamos la venta
+        exito, mensaje = venta_controller.registrar_venta(id_usuario, id_inventario, cantidad)
+        
+        if exito:
+            flash(mensaje, 'success')
+        else:
+            # Mostramos el error (Si el stock no alcanza, el Trigger de Postgres manda el texto aquí)
+            flash(f'No se pudo completar la venta: {mensaje}', 'danger')
+            
+        return redirect(url_for('ventas'))
         
     lista_juegos_disponibles = juego_controller.listar_juegos_disponibles()
     return render_template('ventas.html', productos=lista_juegos_disponibles)
