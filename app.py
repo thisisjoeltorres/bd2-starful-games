@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, send_file
 from config import Config
 from controllers import juego_controller, venta_controller
+from reports import generar_pdf
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -135,10 +136,24 @@ def reportes():
     if 'usuario_id' not in session:
         return redirect(url_for('login'))
     
-    # Lista vacía temporal para que renderice sin conectarse a la BD todavía
-    transacciones = [] 
+    # ¡Ahora sí llamamos a la base de datos!
+    transacciones = venta_controller.obtener_reporte_ventas() 
     
     return render_template('reportes.html', transacciones=transacciones)
+
+@app.route('/reportes/exportar/pdf')
+def exportar_pdf():
+    if 'usuario_id' not in session:
+        return redirect(url_for('login'))
+    
+    # 1. Traemos los datos de la base de datos
+    transacciones = venta_controller.obtener_reporte_ventas()
+    
+    # 2. Le pasamos los datos a ReportLab para que dibuje el PDF
+    ruta_archivo = generar_pdf.crear_pdf_reporte(transacciones)
+    
+    # 3. Forzamos la descarga del archivo en el navegador
+    return send_file(ruta_archivo, as_attachment=True, download_name="Reporte_Starful_Games.pdf")
 
 @app.route('/logout')
 def logout():

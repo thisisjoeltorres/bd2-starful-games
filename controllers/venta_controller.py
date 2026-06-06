@@ -49,3 +49,21 @@ def registrar_venta(id_usuario, id_inventario, cantidad):
             conexion.close()
             
     return False, "Error crítico de conexión a la base de datos."
+
+def obtener_reporte_ventas():
+    """Obtiene el historial completo de ventas desde la vista SQL"""
+    conexion = obtener_conexion()
+    transacciones = []
+    if conexion:
+        try:
+            with conexion.cursor() as cursor:
+                # Consultamos la vista que ya creamos en PostgreSQL
+                query = "SELECT * FROM v_reporte_ventas_detallado ORDER BY fecha DESC;"
+                cursor.execute(query)
+                columnas = [desc[0] for desc in cursor.description]
+                transacciones = [dict(zip(columnas, fila)) for fila in cursor.fetchall()]
+        except Exception as e:
+            print(f"Error al obtener reporte de ventas: {e}")
+        finally:
+            conexion.close()
+    return transacciones
