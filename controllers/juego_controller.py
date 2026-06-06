@@ -134,3 +134,24 @@ def actualizar_juego(id_inventario, id_juego, titulo, genero, id_plataforma, pre
         finally:
             conexion.close()
     return False
+
+def eliminar_juego(id_inventario):
+    """Elimina un registro específico del inventario físico"""
+    conexion = obtener_conexion()
+    if conexion:
+        try:
+            with conexion.cursor() as cursor:
+                # Ejecutamos el DELETE solo sobre la tabla inventario
+                query = "DELETE FROM inventario WHERE id_inventario = %s;"
+                cursor.execute(query, (id_inventario,))
+            
+            # Confirmamos los cambios
+            conexion.commit()
+            return True
+        except Exception as e:
+            print(f"Error al eliminar ítem del inventario: {e}")
+            conexion.rollback()
+            return False
+        finally:
+            conexion.close()
+    return False

@@ -106,6 +106,24 @@ def actualizar_juego(id_inventario):
         
     return redirect(url_for('juegos'))
 
+@app.route('/juegos/eliminar/<int:id_inventario>')
+def eliminar_juego(id_inventario):
+    # Validamos que el usuario esté logueado
+    if 'usuario_id' not in session:
+        return redirect(url_for('login'))
+        
+    # Llamamos al controlador para ejecutar el DELETE
+    exito = juego_controller.eliminar_juego(id_inventario)
+    
+    # Notificamos al usuario según el resultado
+    if exito:
+        flash('El videojuego fue retirado del inventario exitosamente.', 'success')
+    else:
+        flash('Ocurrió un error al intentar eliminar el videojuego.', 'danger')
+        
+    # Recargamos la vista de la tabla
+    return redirect(url_for('juegos'))
+
 @app.route('/ventas', methods=['GET', 'POST'])
 def ventas():
     if 'usuario_id' not in session:
