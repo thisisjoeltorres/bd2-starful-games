@@ -20,19 +20,19 @@
             <div class="collapse navbar-collapse" id="menuNavegacion">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/dashboard">Inicio</a>
+                        <a class="nav-link active" href="{{ url_for('dashboard') }}">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/juegos">Inventario</a>
+                        <a class="nav-link" href="{{ url_for('juegos') }}">Inventario</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/ventas">Registrar Venta</a>
+                        <a class="nav-link" href="{{ url_for('ventas') }}">Registrar Venta</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/reportes">Reportes PDF</a>
+                        <a class="nav-link" href="{{ url_for('reportes') }}">Reportes PDF</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-danger fw-bold" href="/logout">Salir</a>
+                        <a class="nav-link text-danger fw-bold" href="{{ url_for('logout') }}">Salir</a>
                     </li>
                 </ul>
             </div>

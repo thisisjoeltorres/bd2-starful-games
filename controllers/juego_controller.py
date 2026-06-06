@@ -46,3 +46,35 @@ def listar_juegos_disponibles():
         finally:
             conexion.close()
     return juegos
+
+def registrar_juego(titulo, genero, id_plataforma, precio, stock):
+    """Inserta un nuevo título y su stock físico inicial en la BD"""
+    conexion = obtener_conexion()
+    if conexion:
+        try:
+            with conexion.cursor() as cursor:
+                # 1. Insertamos el juego y pedimos que nos devuelva el ID generado
+                query_juego = """
+                    INSERT INTO juegos (titulo, genero, precio)
+                    VALUES (%s, %s, %s) RETURNING id_juego;
+                """
+                cursor.execute(query_juego, (titulo, genero, precio))
+                id_juego = cursor.fetchone()[0]
+
+                # 2. Insertamos el stock físico atado a la plataforma
+                query_inventario = """
+                    INSERT INTO inventario (id_juego, id_plataforma, stock)
+                    VALUES (%s, %s, %s);
+                """
+                cursor.execute(query_inventario, (id_juego, id_plataforma, stock))
+            
+            # Si todo sale bien, guardamos los cambios (Transaction Commit)
+            conexion.commit()
+            return True
+        except Exception as e:
+            print(f"Error al registrar videojuego: {e}")
+            conexion.rollback() # Cancelamos si hubo un error para no dejar datos a medias
+            return False
+        finally:
+            conexion.close()
+    return False
