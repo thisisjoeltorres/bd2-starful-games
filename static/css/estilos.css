@@ -1,6 +1,263 @@
+/* ==========================================================================
+   STARFUL GAMES - STEAM SKIN (CUSTOM OVERRIDES)
+   ========================================================================== */
+
+/* Variables con la paleta oficial de Steam */
+:root {
+    --steam-dark-main: #1b2838;      /* Fondo principal de la tienda */
+    --steam-navbar-bg: #171a21;      /* Fondo del menú superior */
+    --steam-card-bg: #121e2d;        /* Fondo de los contenedores/cápsulas */
+    --steam-card-header: #1d2e42;    /* Encabezados secundarios */
+    --steam-border-blue: #2a475e;    /* Azul de los bordes y líneas divisorias */
+    --steam-text-bright: #ffffff;    /* Texto resaltado */
+    --steam-text-normal: #c7d5e0;    /* Texto general de Steam */
+    --steam-text-muted: #626366;     /* Texto deshabilitado o secundario */
+    
+    /* Degradados y acentos de botones */
+    --steam-green-gradient: linear-gradient(to bottom, #75b022 0%, #588a1b 100%);
+    --steam-green-hover: linear-gradient(to bottom, #8ed629 0%, #69a421 100%);
+    --steam-blue-gradient: linear-gradient(to bottom, #47bfff 0%, #1a7ab3 100%);
+    --steam-blue-hover: linear-gradient(to bottom, #54c4ff 0%, #1f8ece 100%);
+    --steam-gold-gradient: linear-gradient(to bottom, #e0a912 0%, #9a7206 100%);
+}
+
+/* --- Fondo Base e Interfaz General --- */
+html, body {
+    background-color: var(--steam-dark-main) !important;
+    color: var(--steam-text-normal) !important;
+    font-family: "Motiva Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, .display-6 {
+    color: var(--steam-text-bright) !important;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.text-muted {
+    color: #8f98a0 !important; /* Muted text azulado de Steam */
+}
+
+/* --- Barra de Navegación (Estilo Cliente Steam) --- */
+.navbar.bg-primary {
+    background-color: var(--steam-navbar-bg) !important;
+    border-bottom: 2px solid var(--steam-border-blue);
+    padding-top: 12px;
+    padding-bottom: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.navbar-brand {
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.navbar-nav .nav-link {
+    color: #dcdedf !important;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 1px;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    transition: color 0.2s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover, 
+.navbar-nav .nav-link.active {
+    color: var(--steam-text-bright) !important;
+    text-shadow: 0 0 8px rgba(102, 192, 244, 0.6);
+}
+
+/* --- Tarjetas / Paneles de Información (Cápsulas de Biblioteca) --- */
+.card {
+    background-color: var(--steam-card-bg) !important;
+    border: 1px solid var(--steam-border-blue) !important;
+    border-radius: 4px !important; /* Steam usa esquinas casi rectas */
+    overflow: hidden;
+}
+
+/* Modificar los backgrounds analíticos del Dashboard para que parezcan contadores de Steam */
+.card.bg-success {
+    background: var(--steam-green-gradient) !important;
+    border: none !important;
+}
+.card.bg-info {
+    background: var(--steam-blue-gradient) !important;
+    border: none !important;
+}
+.card.bg-warning {
+    background: var(--steam-gold-gradient) !important;
+    border: none !important;
+    color: #000000 !important;
+}
+.card.bg-warning * {
+    color: #111111 !important;
+}
+
+/* Cabeceras de tarjetas (ej. Últimos Movimientos) */
+.card-header.bg-secondary, .card-header.bg-dark {
+    background-color: var(--steam-card-header) !important;
+    border-bottom: 1px solid var(--steam-border-blue) !important;
+    color: var(--steam-text-bright) !important;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+/* Modulo de auditoria (Reportes) */
+.card.bg-secondary.text-white {
+    background-color: #172030 !important; /* Azul cobalto oscuro */
+    border: 1px solid #3d5a80 !important;
+}
+
+/* --- Tablas (Lista de juegos / Historial de compras) --- */
+.table {
+    color: var(--steam-text-normal) !important;
+    background-color: rgba(23, 26, 33, 0.4) !important;
+}
+
+.table th {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+    color: #66c0f4 !important; /* Azul cian para los headers de tablas */
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid var(--steam-border-blue) !important;
+}
+
+.table td {
+    border-bottom: 1px solid rgba(42, 71, 94, 0.4) !important;
+}
+
+/* Fila interactiva como los juegos de la biblioteca */
+.table-hover tbody tr:hover {
+    background-color: rgba(102, 192, 244, 0.1) !important; /* Resaltado azul sutil */
+    color: var(--steam-text-bright) !important;
+}
+
+/* Ajustes de badges */
+.badge.bg-secondary {
+    background-color: #316282 !important; /* Badge azul de categorías de Steam */
+    color: #ffffff !important;
+}
+.badge.bg-info {
+    background-color: #101822 !important;
+    border: 1px solid #66c0f4;
+    color: #66c0f4 !important;
+}
+.badge.bg-light {
+    background-color: #2a475e !important;
+    color: #ffffff !important;
+}
+
+/* --- Botones (Estilo Botón de Compra / Instalar de Steam) --- */
+.btn-success {
+    background: var(--steam-green-gradient) !important;
+    border: none !important;
+    color: #ffffff !important;
+    font-weight: 500;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.btn-success:hover {
+    background: var(--steam-green-hover) !important;
+}
+
+.btn-primary {
+    background: var(--steam-blue-gradient) !important;
+    border: none !important;
+    color: #ffffff !important;
+}
+.btn-primary:hover {
+    background: var(--steam-blue-hover) !important;
+}
+
+.btn-warning {
+    background: var(--steam-gold-gradient) !important;
+    border: none !important;
+    color: #ffffff !important;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+.btn-warning:hover {
+    background: linear-gradient(to bottom, #ffc824 0%, #b8890b 100%) !important;
+    color: #ffffff !important;
+}
+
+.btn-secondary {
+    background-color: #3d4450 !important;
+    border: 1px solid #565d6a !important;
+    color: var(--steam-text-bright) !important;
+}
+.btn-secondary:hover {
+    background-color: #4c5463 !important;
+}
+
+/* --- Formularios, Inputs y Selects --- */
+.form-control, .form-select {
+    background-color: #223147 !important; /* El input azul oscuro característico */
+    border: 1px solid var(--steam-border-blue) !important;
+    color: var(--steam-text-bright) !important;
+    border-radius: 3px !important;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #66c0f4 !important;
+    box-shadow: 0 0 8px rgba(102, 192, 244, 0.4) !important;
+}
+
+.form-control::placeholder {
+    color: #51687e !important;
+}
+
+.form-text.text-info {
+    color: #66c0f4 !important;
+}
+
+/* --- Modales y Alertas --- */
+.modal-content {
+    background-color: var(--steam-dark-main) !important;
+    border: 1px solid #66c0f4 !important; /* Brillo azul en los bordes del modal */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+.alert-success {
+    background-color: #213c14 !important;
+    border-color: #4b7c1d !important;
+    color: #a3e06a !important;
+}
+
+.alert-danger {
+    background-color: #441919 !important;
+    border-color: #7c2424 !important;
+    color: #f79696 !important;
+}
+
+/* --- Detalles Adicionales Visuales --- */
+/* .logo-icon, .logo-icon-header {
+    filter: drop-shadow(0px 0px 6px rgba(102, 192, 244, 0.5));
+    transition: transform 0.3s ease;
+} */
+
+/* Estilo para la página de Login */
+body {
+    background: radial-gradient(circle at center, #1b2838 0%, #0e141d 100%) !important;
+}
+
 .logo-icon {
     height: 32px;
+    filter: drop-shadow(0px 0px 0px rgb(255, 255, 255));
+    transition: transform 0.3s ease-in-out;
+    transform: scale(1);
 }
+
+.logo-icon:hover {
+    filter: drop-shadow(0px 0px 6px rgb(255, 255, 255));
+    transform: scale(1.03);
+}
+
 
 .logo-icon-header {
     height: 48px;
