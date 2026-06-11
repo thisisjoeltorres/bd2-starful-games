@@ -67,3 +67,52 @@ def obtener_reporte_ventas():
         finally:
             conexion.close()
     return transacciones
+
+def obtener_datos_dashboard():
+    """Recupera los contadores de control de inventario y los movimientos más recientes"""
+    conexion = obtener_conexion()
+    
+    # Inicializamos una estructura por defecto en caso de fallo de conexión
+    datos = {
+        'total_juegos': 0,
+        'ventas_hoy': 0,
+        'stock_critico': 0,
+        'ultimos_movimientos': []
+    }
+    
+    if conexion:
+        try:
+            with conexion.cursor() as cursor:
+                # 1. Total de títulos registrados en el catálogo base
+                cursor.execute("SELECT COUNT(*) FROM juegos;")
+                datos['total_juegos'] = cursor.fetchone()[0]
+
+                # 2. Total de transacciones de salida (Ventas) realizadas el día de hoy
+                cursor.execute("SELECT COUNT(*) FROM ventas WHERE fecha::date = CURRENT_DATE;")
+                datos['ventas_hoy'] = cursor.fetchone()[0]
+
+                # 3. Cantidad de ítems en almacén cuyo stock físico es de 3 unidades o menos
+                cursor.execute("SELECT COUNT(*) FROM inventario WHERE stock <= 3;")
+                datos['stock_critico'] = cursor.fetchone()[0]
+
+                # 4. Obtener los últimos 5 movimientos reales desde nuestra vista detallada
+                query_movimientos = """
+                    SELECT videojuego, plataforma 
+                    FROM v_reporte_ventas_detallado 
+                    ORDER BY fecha DESC 
+                    LIMIT 5;
+                """
+                cursor.execute(query_movimientos)
+                
+                # Mapeamos los resultados construyendo el estado como 'Salida (Venta)'
+                datos['ultimos_movimientos'] = [
+                    {'videojuego': fila[0], 'plataforma': fila[1], 'estado': 'Salida (Venta)'}
+                    for fila in cursor.fetchall()
+                ]
+                
+        except Exception as e:
+            print(f"Error al recopilar métricas del dashboard: {e}")
+        finally:
+            conexion.close()
+            
+    return datos

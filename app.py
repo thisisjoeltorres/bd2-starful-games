@@ -37,7 +37,12 @@ def login():
 def dashboard():
     if 'usuario_id' not in session:
         return redirect(url_for('login'))
-    return render_template('inicio.html')
+    
+    # Invocamos la función para traer las estadísticas reales de PostgreSQL
+    resumen_tienda = venta_controller.obtener_datos_dashboard()
+    
+    # Enviamos los datos estructurados a la vista HTML
+    return render_template('inicio.html', resumen=resumen_tienda)
 
 @app.route('/juegos')
 def juegos():

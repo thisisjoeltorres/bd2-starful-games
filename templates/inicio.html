@@ -13,7 +13,9 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
         <div class="container">
-            <a class="navbar-brand" href="/dashboard">🎮 Starful Games</a>
+            <a class="navbar-brand" href="/dashboard">
+                <img src="../static/img/starful_games_logo.png" class="logo-icon" />
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavegacion">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -53,7 +55,7 @@
                 <div class="card text-white bg-success mb-3 shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title">Títulos Disponibles</h5>
-                        <p class="card-text fs-1 fw-bold">142</p>
+                        <p class="card-text fs-1 fw-bold">{{ resumen.total_juegos }}</p>
                     </div>
                 </div>
             </div>
@@ -61,7 +63,7 @@
                 <div class="card text-white bg-info mb-3 shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title">Ventas de Hoy</h5>
-                        <p class="card-text fs-1 fw-bold">8</p>
+                        <p class="card-text fs-1 fw-bold">{{ resumen.ventas_hoy }}</p>
                     </div>
                 </div>
             </div>
@@ -69,7 +71,7 @@
                 <div class="card text-white bg-warning mb-3 shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title">Stock Crítico</h5>
-                        <p class="card-text fs-1 fw-bold">3</p>
+                        <p class="card-text fs-1 fw-bold">{{ resumen.stock_critico }}</p>
                     </div>
                 </div>
             </div>
@@ -91,21 +93,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Sonic Frontiers</td>
-                                    <td>PS5</td>
-                                    <td><span class="badge bg-success">Salida (Venta)</span></td>
-                                </tr>
-                                <tr>
-                                    <td>Papa's Freezeria Deluxe</td>
-                                    <td>PC Físico</td>
-                                    <td><span class="badge bg-primary">Ingreso (Stock)</span></td>
-                                </tr>
-                                <tr>
-                                    <td>The Legend of Zelda: Tears of the Kingdom</td>
-                                    <td>Nintendo Switch</td>
-                                    <td><span class="badge bg-success">Salida (Venta)</span></td>
-                                </tr>
+                                {% if resumen.ultimos_movimientos %}
+                                    {% for movimiento in resumen.ultimos_movimientos %}
+                                    <tr>
+                                        <td class="fw-bold">{{ movimiento.videojuego }}</td>
+                                        <td><span class="badge bg-light text-dark fw-bold">{{ movimiento.plataforma }}</span></td>
+                                        <td><span class="badge bg-success">{{ movimiento.estado }}</span></td>
+                                    </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="3" class="text-center py-4 text-muted">
+                                            No se han procesado transacciones de salida recientemente.
+                                        </td>
+                                    </tr>
+                                {% endif %}
                             </tbody>
                         </table>
                     </div>
