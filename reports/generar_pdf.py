@@ -1,5 +1,5 @@
 import os
-from reportlab.lib.pagesizes import letter
+from reportlab.lib.pagesizes import letter, landscape  # 1. Importamos landscape
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
@@ -9,7 +9,8 @@ def crear_pdf_reporte(transacciones):
     os.makedirs('static/pdf', exist_ok=True)
     ruta_pdf = 'static/pdf/reporte_ventas.pdf'
     
-    doc = SimpleDocTemplate(ruta_pdf, pagesize=letter)
+    # 2. Cambiamos la orientación de la hoja a horizontal (landscape)
+    doc = SimpleDocTemplate(ruta_pdf, pagesize=landscape(letter))
     elementos = []
     estilos = getSampleStyleSheet()
     
@@ -41,7 +42,14 @@ def crear_pdf_reporte(transacciones):
         ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
         ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
         ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        
+        # 3. Reducimos el tamaño de la fuente para toda la tabla (9pt es ideal para reportes)
+        ('FONTSIZE', (0, 0), (-1, -1), 9),
+        
+        # 4. Ajustamos los paddings para que no quede demasiado aire con la letra pequeña
+        ('TOPPADDING', (0, 0), (-1, -1), 6),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+        
         ('BACKGROUND', (0, 1), (-1, -1), colors.HexColor('#ECF0F1')),
         ('GRID', (0, 0), (-1, -1), 1, colors.black),
     ]))
